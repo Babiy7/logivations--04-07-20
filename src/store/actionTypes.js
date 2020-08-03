@@ -1,0 +1,11 @@
+const LOADING = 'LOADING';
+const ADD_EXPENSE = 'ADD_EXPENSE';
+const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
+const ERROR = 'ERROR';
+
+export {
+    LOADING,
+    ADD_EXPENSE,
+    REMOVE_EXPENSE,
+    ERROR
+};
