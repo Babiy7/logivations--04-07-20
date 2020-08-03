@@ -4,9 +4,9 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux';
-import expenses from '../src/store/reducers/expenses';
+import posts from '../src/store/reducers/posts';
 
-const store = createStore(expenses);
+const store = createStore(posts);
 
 ReactDOM.render(
   <React.StrictMode>
