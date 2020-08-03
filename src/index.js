@@ -8,8 +8,6 @@ import expenses from '../src/store/reducers/expenses';
 
 const store = createStore(expenses);
 
-console.log(store.getState());
-
 ReactDOM.render(
   <React.StrictMode>
     <App />

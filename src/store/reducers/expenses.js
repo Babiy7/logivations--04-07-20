@@ -23,7 +23,6 @@ function expenses(state = initState, action) {
                 loading: true,
                 error: false
             }
-        
         }
       
         case actions.ADD_EXPENSE: {
