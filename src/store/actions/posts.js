@@ -23,7 +23,7 @@ const getPosts = posts => {
 function getPostsAsync() {
     return dispatch => {
         dispatch(loading());
-        fetch('https://jsonplaceholder.typicode.com/posts')
+        fetch('https://jsonplaceholder.typsicode.com/posts')
             .then(response => response.json())
             .then(posts => {
                 dispatch(getPosts(posts))

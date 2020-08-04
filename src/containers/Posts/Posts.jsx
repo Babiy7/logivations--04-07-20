@@ -35,6 +35,7 @@ function Posts(props) {
 }
 
 const mapStateToProps = state => {  
+    console.log(state);
     const { loading, posts, error } = state;
     
     return {

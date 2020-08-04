@@ -1,4 +1,5 @@
 import * as actions from '../actionTypes';
+import { updatedObject } from '../../shared/helper';
 
 const initState = {
     loading: false,
@@ -6,35 +7,35 @@ const initState = {
     error: null
 }
 
-const changedState = (loading, posts, error) => {
-    return {
-        loading: loading,
-        posts: posts,
-        error: error
-    };
-} 
+const loading = state => updatedObject(state, { loading: true });
+const error = (state, action) => updatedObject(state, { error: action.payload, loading: false });
+const init = (state, action) => updatedObject(state,
+    { 
+        loading: false,
+        posts: action.payload,
+        error: null
+    });  
 
 function posts(state = initState, action) {
-   
     switch(action.type) {
         case actions.LOADING: {
-            return state = changedState(true, state.posts, null);
+            return loading(state);
         }
 
         case actions.FETCH_POSTS: {
-            return state = changedState(false, action.payload, null);
+            return init(state, action);
         }
       
-        case actions.ADD_POSTS: {
-            return state = changedState(false, ...state.posts, null); 
-        }
+        // case actions.ADD_POSTS: {
+        //     return changedState(false, ...state.posts, null); 
+        // }
 
-        case actions.REMOVE_POSTS: {
-            return state = changedState(false, state.expenses.filter(expense => expense === action.payload), null);
-        }
+        // case actions.REMOVE_POSTS: {
+        //     return changedState(false, state.expenses.filter(expense => expense === action.payload), null);
+        // }
 
         case actions.ERROR: {
-            return state = changedState(false, state.posts, action.payload);
+            return error(state, action);
         }
 
         default : {
