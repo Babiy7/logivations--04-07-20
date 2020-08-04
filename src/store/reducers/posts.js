@@ -15,37 +15,31 @@ const changedState = (loading, posts, error) => {
 } 
 
 function posts(state = initState, action) {
+   
     switch(action.type) {
-
         case actions.LOADING: {
-            state = changedState(true, ...state.posts, null);
-            break;
+            return state = changedState(true, state.posts, null);
         }
 
         case actions.FETCH_POSTS: {
-            state = changedState(false, action.payload, null);
-            break;
+            return state = changedState(false, action.payload, null);
         }
       
         case actions.ADD_POSTS: {
-            state = changedState(false, ...state.posts, null); 
-            break;
+            return state = changedState(false, ...state.posts, null); 
         }
 
         case actions.REMOVE_POSTS: {
-            state = changedState(false, state.expenses.filter(expense => expense === action.payload), null);
-            break;
+            return state = changedState(false, state.expenses.filter(expense => expense === action.payload), null);
         }
 
         case actions.ERROR: {
-            state = changedState(false, ...state.posts, action.payload);
-            break;
+            return state = changedState(false, state.posts, action.payload);
         }
 
         default : {
-            state = changedState(false, state.posts, null);
+            return state;
         }
-        return state;
     }
 }
 
