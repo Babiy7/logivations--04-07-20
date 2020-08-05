@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 function Navigation(props) {
-
     const [state, setState] = useState('Comments');
 
     return (
@@ -17,8 +16,8 @@ function Navigation(props) {
                         <div className="dropdown-menu mr-5" aria-labelledby="navbarDropdown">
                         { ['Comments', 'Views', 'Latest'].map((item, i, array) => {
                           return <div key={item}>
-                                <a className="dropdown-item" href="#" onClick={() => setState(item)}>{item}</a>
-                                {i === (array.length - 1) ? null : <div className="dropdown-divider"></div>}
+                                    <a className="dropdown-item" href="#" onClick={() => setState(item)}>{item}</a>
+                                    {i === (array.length - 1) ? null : <div className="dropdown-divider"></div>}
                             </div>
                            } 
                         )}

@@ -23,13 +23,13 @@ const getPosts = posts => {
 function getPostsAsync() {
     return dispatch => {
         dispatch(loading());
-        fetch('https://jsonplaceholder.typsicode.com/posts')
+        fetch('https://jsonplaceholder.typicode.com/posts')
             .then(response => response.json())
             .then(posts => {
-                dispatch(getPosts(posts))
+                dispatch(getPosts(posts));
             })
             .catch(e => {
-                dispatch(error(e.message))
+                dispatch(error(e.message));
             });            
     }
 }
