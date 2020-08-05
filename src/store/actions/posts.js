@@ -21,16 +21,25 @@ const getPosts = posts => {
 }
 
 function getPostsAsync() {
-    return dispatch => {
+    return (dispatch, getState) => {
         dispatch(loading());
-        fetch('https://jsonplaceholder.typicode.com/posts')
-            .then(response => response.json())
-            .then(posts => {        
-                dispatch(getPosts(posts.slice(0, 20)));
-            })
-            .catch(e => {
-                dispatch(error(e.message));
-            });            
+        
+        const posts = JSON.parse(localStorage.getItem('posts'));
+        
+        if(posts) {
+            dispatch(getPosts(posts));
+        } else {
+            fetch('https://jsonplaceholder.typicode.com/posts')
+                .then(response => response.json())
+                .then(data => { 
+                    const posts = data.slice(0, 20);
+                    localStorage.setItem('posts', JSON.stringify(posts));
+                    dispatch(getPosts(posts));
+                })
+                .catch(e => {
+                    dispatch(error(e.message));
+                });    
+        }
     }
 }
 
