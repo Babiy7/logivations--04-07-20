@@ -5,6 +5,7 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
+
 import Navigation from './components/UI/Navigation/Navigation';
 import Posts from './containers/Posts/Posts';
 import BasicPost from './components/BasicPost/BasicPost';
