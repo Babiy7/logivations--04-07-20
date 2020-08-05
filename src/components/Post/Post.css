@@ -6,3 +6,13 @@
     background: rgba(0, 0, 0, 0.2);
     cursor: pointer;
 }
+
+.post-link {
+    text-decoration: none;
+    color: black;
+}
+
+.post-link:hover {
+    text-decoration: none;
+    color: black;
+}

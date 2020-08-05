@@ -25,8 +25,8 @@ function getPostsAsync() {
         dispatch(loading());
         fetch('https://jsonplaceholder.typicode.com/posts')
             .then(response => response.json())
-            .then(posts => {
-                dispatch(getPosts(posts));
+            .then(posts => {        
+                dispatch(getPosts(posts.slice(0, 20)));
             })
             .catch(e => {
                 dispatch(error(e.message));
