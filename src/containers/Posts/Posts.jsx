@@ -22,7 +22,7 @@ function Posts(props) {
     } else {
         content =  <> 
         {props.posts ? props.posts.slice(0, 20).map(post => {
-            return <Post key={post.id} title={post.title} body={post.body} />}
+            return <Post key={post.id} id={post.id} title={post.title} body={post.body} />}
        ) : null } 
        </>;
     }
