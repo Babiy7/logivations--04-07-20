@@ -1,0 +1,1 @@
+export const updatedObject = (state, updated) => ({...state, ...updated});
