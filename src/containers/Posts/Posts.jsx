@@ -21,7 +21,7 @@ function Posts(props) {
         content = <Alert type='danger' message={props.error} />;
     } else {
         content =  <> 
-        {props.posts ? props.posts.slice(0, 20).map(post => {
+        {props.posts ? props.posts.map(post => {
             return <Post key={post.id} id={post.id} title={post.title} body={post.body} />}
        ) : null } 
        </>;
