@@ -16,7 +16,7 @@ function BasicPost(props) {
             props.getComments();
         }
     }, [props]);
-    const { loading, posts, error } = props;
+    const { loading, posts, error, comments } = props;
     const { id } = useParams();
     const history = useHistory();
     let content = null;
@@ -45,7 +45,7 @@ function BasicPost(props) {
                 <div className="card-body">
                     <p className="card-text">{body ? body : null}</p>
                 </div>
-                <Collapse />
+                <Collapse comments={comments} id={post.id} />
             </div>
         )
     }

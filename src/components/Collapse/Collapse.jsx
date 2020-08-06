@@ -4,29 +4,36 @@ import arrow from '../../assets/down-arrow.svg';
 
 const Collapse = props => {
     const [open, setOpen] = useState(false);
+    const comments = props.comments.filter(comment => props.id === comment.postId);
+
+    console.log(props, comments);
 
     return (
         <>
-            <p>
-                <div 
-                    className="collapse-container" 
-                    data-toggle="collapse" 
-                    data-target="#collapseExample" 
-                    aria-expanded="false" 
-                    aria-controls="collapseExample"
-                    onClick={() => setOpen(!open)}
-                >
-                    <img src={arrow} alt='arrow' className='collapse-container__arrow'
-                         style={{transform: open ? 'rotate(180deg)' : 'rotate(0deg)'}}
-                    />
-                </div>
-            </p>
+            <div 
+                className="collapse-container" 
+                data-toggle="collapse" 
+                data-target="#collapseExample" 
+                aria-expanded="false" 
+                aria-controls="collapseExample"
+                onClick={() => setOpen(!open)}
+            >
+                <p>comments: {comments.length}</p>
+                <img src={arrow} alt='arrow' className='collapse-container__arrow'
+                        style={{transform: open ? 'rotate(180deg)' : 'rotate(0deg)'}}
+                />
+            </div>
             <div className="collapse" id="collapseExample">
-                <div className="card card-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high 
-                    life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, 
-                    craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                </div>
+                <ul className="list-group">
+                    {comments.map(comment => 
+                   ( <li className="list-group-item">
+                        <div className="collapse__item" >
+                            <p className="collapse__item-comment">{comment.name}</p>
+                            <p className="collapse__item-email">{comment.email}</p> 
+                        </div>
+                    </li>)
+                    )}  
+                </ul>
             </div>
       </>
     )
