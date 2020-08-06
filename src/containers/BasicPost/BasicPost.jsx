@@ -7,6 +7,7 @@ import getPostAsync, { getCommentsAsync } from '../../store/actions/posts';
 
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Alert from '../../components/UI/Alert/Alert';
+import Collapse from '../../components/Collapse/Collapse';
 
 function BasicPost(props) {
     useEffect(() => {
@@ -44,6 +45,7 @@ function BasicPost(props) {
                 <div className="card-body">
                     <p className="card-text">{body ? body : null}</p>
                 </div>
+                <Collapse />
             </div>
         )
     }

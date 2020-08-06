@@ -1,5 +1,4 @@
 import * as actions from '../actionTypes';
-import { wait } from '@testing-library/react';
 
 export const loading = () => {
     return {
