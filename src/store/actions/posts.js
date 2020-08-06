@@ -1,27 +1,41 @@
-import { FETCH_POSTS, LOADING, ERROR } from '../actionTypes';
+import * as actions from '../actionTypes';
+import { wait } from '@testing-library/react';
 
 export const loading = () => {
     return {
-        type: LOADING
+        type: actions.LOADING
     }
 }
 
 export const error = message => {
     return {
-        type: ERROR,
+        type: actions.ERROR,
         payload: message
     }
 }
 
 const getPosts = posts => {
     return {
-        type: FETCH_POSTS,
+        type: actions.FETCH_POSTS,
         payload: posts
     }
 }
 
+const getComments = comments => {
+    return {
+        type: actions.FETCH_COMMENTS,
+        payload: comments
+    }
+}
+
+async function getData(url) {
+    const response = await fetch(url);
+
+    return await response.json();
+}
+
 function getPostsAsync() {
-    return (dispatch, getState) => {
+    return dispatch => {
         dispatch(loading());
         
         const posts = JSON.parse(localStorage.getItem('posts'));
@@ -29,8 +43,7 @@ function getPostsAsync() {
         if(posts) {
             dispatch(getPosts(posts));
         } else {
-            fetch('https://jsonplaceholder.typicode.com/posts')
-                .then(response => response.json())
+            getData('https://jsonplaceholder.typicode.com/posts')
                 .then(data => { 
                     const posts = data.slice(0, 20);
                     localStorage.setItem('posts', JSON.stringify(posts));
@@ -40,6 +53,20 @@ function getPostsAsync() {
                     dispatch(error(e.message));
                 });    
         }
+    }
+}
+
+export function getCommentsAsync() {
+    return dispatch => {
+        dispatch(loading());
+
+        getData('https://jsonplaceholder.typicode.com/comments')
+            .then(data => {
+                dispatch(getComments(data));
+            })
+            .catch(e => {
+                dispatch(error(e.message));
+            });
     }
 }
 

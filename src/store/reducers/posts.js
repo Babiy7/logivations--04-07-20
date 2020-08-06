@@ -4,17 +4,21 @@ import { updatedObject } from '../../shared/helper';
 const initState = {
     loading: false,
     posts: [],
+    comments: [],
     error: null
 }
 
 const loading = state => updatedObject(state, { loading: true });
 const error = (state, action) => updatedObject(state, { error: action.payload, loading: false });
-const init = (state, action) => updatedObject(state,
-    { 
-        loading: false,
-        posts: action.payload,
-        error: null
-    });  
+const init = (state, action, key) => 
+    (updatedObject(state,
+        { 
+            loading: false,
+            [key]: action.payload,
+            error: null
+        })
+    );
+    
 
 function posts(state = initState, action) {
     switch(action.type) {
@@ -23,7 +27,11 @@ function posts(state = initState, action) {
         }
 
         case actions.FETCH_POSTS: {
-            return init(state, action);
+            return init(state, action, 'posts');
+        }
+
+        case actions.FETCH_COMMENTS: {
+            return init(state, action, 'comments');
         }
       
         // case actions.ADD_POSTS: {

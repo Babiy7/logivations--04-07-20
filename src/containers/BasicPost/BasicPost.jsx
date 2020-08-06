@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, memo } from 'react';
 import './BasicPost.css';
 
 import { useParams, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import getPostAsync from '../../store/actions/posts';
+import getPostAsync, { getCommentsAsync } from '../../store/actions/posts';
 
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Alert from '../../components/UI/Alert/Alert';
@@ -12,8 +12,9 @@ function BasicPost(props) {
     useEffect(() => {
         if(props.posts.length === 0 && props.error === null) {
             props.getPosts();
+            props.getComments();
         }
-    });
+    }, [props]);
     const { loading, posts, error } = props;
     const { id } = useParams();
     const history = useHistory();
@@ -54,14 +55,16 @@ const mapStateToProps = state => {
     return {
         loading: state.loading,
         posts: state.posts,
+        comments: state.comments,
         error: state.error
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        getPosts: () => dispatch(getPostAsync())
+        getPosts: () => dispatch(getPostAsync()),
+        getComments: () => dispatch(getCommentsAsync())
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(BasicPost);
+export default memo(connect(mapStateToProps, mapDispatchToProps)(BasicPost));
