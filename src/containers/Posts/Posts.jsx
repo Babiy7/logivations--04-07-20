@@ -13,16 +13,21 @@ function Posts(props) {
         }
     });
 
+    const { loading, posts, error } = props;
+
     let content = null;
 
-    if(props.loading) {
+    if(loading) {
         content = <Spinner />
-    } else if (props.error) {
-        content = <Alert type='danger' message={props.error} />;
+    } 
+    
+    if (error) {
+        content = <Alert type='danger' message={error} />;
     } else {
         content =  <> 
-        {props.posts ? props.posts.map(post => {
-            return <Post key={post.id} id={post.id} title={post.title} body={post.body} />}
+        {posts ? posts.map(post => {
+            const { id, title, body } = post;
+            return <Post key={id} id={id} title={title} body={body} />}
        ) : null } 
        </>;
     }

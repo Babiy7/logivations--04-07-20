@@ -8,7 +8,7 @@ import {
 
 import Navigation from './components/UI/Navigation/Navigation';
 import Posts from './containers/Posts/Posts';
-import BasicPost from './components/BasicPost/BasicPost';
+import BasicPost from './containers/BasicPost/BasicPost';
 
 function App() {
   return (
