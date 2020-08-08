@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import getPostAsync from '../../store/actions/posts';
+import getPostAsync, { getCommentsAsync } from '../../store/actions/posts';
 import Post from '../../components/Post/Post';
 import './Posts.css';
 import Spinner from '../../components/UI/Spinner/Spinner';
@@ -8,12 +8,11 @@ import Alert from '../../components/UI/Alert/Alert';
 
 function Posts(props) {
     useEffect(() => {
-        if(props.posts.length === 0 && props.error === null) {
-            props.getPost(getPostAsync());
-        }
-    });
+        props.getPost(getPostAsync());
+        // eslint-disable-next-line
+    }, []);
 
-    const { loading, posts, error } = props;
+    const { loading, posts, error, comments } = props;
 
     let content = null;
 
@@ -27,7 +26,13 @@ function Posts(props) {
         content =  <> 
         {posts ? posts.map(post => {
             const { id, title, body } = post;
-            return <Post key={id} id={id} title={title} body={body} />}
+            return <Post    
+                        key={id} 
+                        id={id} 
+                        title={title} 
+                        body={body} 
+                        comments={comments} 
+                    />}
        ) : null } 
        </>;
     }
@@ -40,18 +45,20 @@ function Posts(props) {
 }
 
 const mapStateToProps = state => {  
-    const { loading, posts, error } = state;
-    
+    const { loading, posts, error, comments } = state;
+   
     return {
       loading: loading,
       posts: posts,
+      comments: comments,
       error: error
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        getPost: action => dispatch(action)
+        getPost: action => dispatch(action),
+        getComments: action => dispatch(action)
     }
 }
 

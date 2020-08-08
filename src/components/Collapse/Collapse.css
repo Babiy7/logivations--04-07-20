@@ -1,0 +1,30 @@
+.collapse-container {
+    width: 100%;
+    height: 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+    opacity: 0.5;
+    transition: all 0.2s linear;
+}
+
+.collapse-container:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.collapse-container__arrow {
+    width: 25px;
+    height: 25px;
+    transition: all 0.2s linear;
+}
+
+.collapse__item-email {
+    font-size: 12px;
+    opacity: 0.5;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}

@@ -2,6 +2,7 @@ const LOADING = 'LOADING';
 const ADD_POSTS = 'ADD_POSTS';
 const REMOVE_POSTS = 'REMOVE_POSTS';
 const FETCH_POSTS = 'FETCH_POSTS';
+const FETCH_COMMENTS = 'FETCH_COMMENTS';
 const ERROR = 'ERROR';
 
 export {
@@ -9,5 +10,6 @@ export {
     ADD_POSTS,
     REMOVE_POSTS,
     FETCH_POSTS,
+    FETCH_COMMENTS,
     ERROR
 };
