@@ -10,11 +10,11 @@ const initState = {
 
 const loading = state => updatedObject(state, { loading: true });
 const error = (state, action) => updatedObject(state, { error: action.payload, loading: false });
-const init = (state, action, key) => 
+const init = (state, response, key) => 
     (updatedObject(state,
         { 
             loading: false,
-            [key]: action.payload,
+            ...response,
             error: null
         })
     );
@@ -27,7 +27,7 @@ function posts(state = initState, action) {
         }
 
         case actions.FETCH_POSTS: {
-            return init(state, action, 'posts');
+            return init(state, action.payload, 'posts');
         }
 
         case actions.FETCH_COMMENTS: {

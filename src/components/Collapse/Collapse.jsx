@@ -26,7 +26,7 @@ const Collapse = props => {
             <div className="collapse" id="collapseExample">
                 <ul className="list-group">
                     {comments.map(comment => 
-                   ( <li className="list-group-item">
+                   ( <li key={comment.id} className="list-group-item">
                         <div className="collapse__item" >
                             <p className="collapse__item-comment">{comment.name}</p>
                             <p className="collapse__item-email">{comment.email}</p> 

@@ -21,6 +21,8 @@ function BasicPost(props) {
     const history = useHistory();
     let content = null;
 
+    console.log(comments);
+
     const handleClick = () => {
         history.push('/');
     }

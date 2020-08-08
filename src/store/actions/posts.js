@@ -13,10 +13,10 @@ export const error = message => {
     }
 }
 
-const getPosts = posts => {
+const getPosts = response => {
     return {
         type: actions.FETCH_POSTS,
-        payload: posts
+        payload: response
     }
 }
 
@@ -38,19 +38,26 @@ function getPostsAsync() {
         dispatch(loading());
         
         const posts = JSON.parse(localStorage.getItem('posts'));
-        
+        const comments = JSON.parse(localStorage.getItem('comments'));
+
         if(posts) {
-            dispatch(getPosts(posts));
+            dispatch(getPosts({posts, comments}));
         } else {
-            getData('https://jsonplaceholder.typicode.com/posts')
-                .then(data => { 
-                    const posts = data.slice(0, 20);
+            Promise.all(
+                [
+                    getData('https://jsonplaceholder.typicode.com/posts'), 
+                    getData('https://jsonplaceholder.typicode.com/comments')
+                ])
+                .then(data => {
+                    const posts = data[0];
+                    const comments = data[1];
                     localStorage.setItem('posts', JSON.stringify(posts));
-                    dispatch(getPosts(posts));
+                    localStorage.setItem('comments', JSON.stringify(comments));
+                    dispatch(getPosts({posts, comments}));
                 })
                 .catch(e => {
                     dispatch(error(e.message));
-                });    
+                });            
         }
     }
 }

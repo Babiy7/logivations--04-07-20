@@ -22,6 +22,7 @@
 
 .basic-post__button:hover {
     background-color: rgba(0, 0, 0, 0.2);
+    outline: none;
 }
 
 .basic-post__title {
