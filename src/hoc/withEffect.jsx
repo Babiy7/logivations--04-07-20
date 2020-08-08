@@ -20,15 +20,28 @@ const mapDispatchToProps = dispatch => {
 }
 
 function withEffect(WrappedComponent) {
-    return connect(mapStateToProps, mapDispatchToProps)(class extends React.Component {
+
+    class WithEffect extends React.Component {
         componentDidMount() {
             this.props.getPost(getPostAsync());
         }
 
         render() {
-            return <WrappedComponent {...this.props} />
+            const { comments, posts, loading, error } = this.props;
+            return <WrappedComponent 
+                        comments={comments} 
+                        posts={posts} 
+                        loading={loading} 
+                        error={error} 
+                    />
         }
-    })
+    }
+    WithEffect.displayName = `WithEffect(${getDisplayName(WrappedComponent)})`;
+    return connect(mapStateToProps, mapDispatchToProps)(WithEffect);
+}
+
+function getDisplayName(WrappedComponent) {
+    return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 }
 
 export default withEffect;
