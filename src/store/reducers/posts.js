@@ -29,10 +29,6 @@ function posts(state = initState, action) {
         case actions.FETCH_POSTS: {
             return init(state, action.payload, 'posts');
         }
-
-        case actions.FETCH_COMMENTS: {
-            return init(state, action, 'comments');
-        }
       
         // case actions.ADD_POSTS: {
         //     return changedState(false, ...state.posts, null); 

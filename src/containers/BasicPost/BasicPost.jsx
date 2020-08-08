@@ -3,7 +3,7 @@ import './BasicPost.css';
 
 import { useParams, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import getPostAsync, { getCommentsAsync } from '../../store/actions/posts';
+import getPostAsync from '../../store/actions/posts';
 
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Alert from '../../components/UI/Alert/Alert';
@@ -13,7 +13,6 @@ function BasicPost(props) {
     useEffect(() => {
         if(props.posts.length === 0 && props.error === null) {
             props.getPosts();
-            props.getComments();
         }
     }, [props]);
     const { loading, posts, error, comments } = props;
@@ -66,8 +65,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getPosts: () => dispatch(getPostAsync()),
-        getComments: () => dispatch(getCommentsAsync())
+        getPosts: () => dispatch(getPostAsync())
     }
 }
 

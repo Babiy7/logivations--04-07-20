@@ -62,18 +62,4 @@ function getPostsAsync() {
     }
 }
 
-export function getCommentsAsync() {
-    return dispatch => {
-        dispatch(loading());
-
-        getData('https://jsonplaceholder.typicode.com/comments')
-            .then(data => {
-                dispatch(getComments(data));
-            })
-            .catch(e => {
-                dispatch(error(e.message));
-            });
-    }
-}
-
 export default getPostsAsync;

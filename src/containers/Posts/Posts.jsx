@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import getPostAsync, { getCommentsAsync } from '../../store/actions/posts';
+import getPostAsync from '../../store/actions/posts';
 import Post from '../../components/Post/Post';
 import './Posts.css';
 import Spinner from '../../components/UI/Spinner/Spinner';
@@ -57,8 +57,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getPost: action => dispatch(action),
-        getComments: action => dispatch(action)
+        getPost: action => dispatch(action)
     }
 }
 
