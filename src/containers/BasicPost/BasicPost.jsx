@@ -1,26 +1,18 @@
-import React, { useEffect, memo } from 'react';
+import React from 'react';
 import './BasicPost.css';
 
 import { useParams, useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
-import getPostAsync from '../../store/actions/posts';
+import withEffect from '../../hoc/withEffect';
 
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Alert from '../../components/UI/Alert/Alert';
 import Collapse from '../../components/Collapse/Collapse';
 
 function BasicPost(props) {
-    useEffect(() => {
-        if(props.posts.length === 0 && props.error === null) {
-            props.getPosts();
-        }
-    }, [props]);
     const { loading, posts, error, comments } = props;
     const { id } = useParams();
     const history = useHistory();
     let content = null;
-
-    console.log(comments);
 
     const handleClick = () => {
         history.push('/');
@@ -54,19 +46,4 @@ function BasicPost(props) {
     return content;
 }
 
-const mapStateToProps = state => {
-    return {
-        loading: state.loading,
-        posts: state.posts,
-        comments: state.comments,
-        error: state.error
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        getPosts: () => dispatch(getPostAsync())
-    }
-}
-
-export default memo(connect(mapStateToProps, mapDispatchToProps)(BasicPost));
+export default withEffect(BasicPost);

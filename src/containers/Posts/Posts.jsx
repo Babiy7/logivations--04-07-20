@@ -1,17 +1,11 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import getPostAsync from '../../store/actions/posts';
+import React from 'react';
 import Post from '../../components/Post/Post';
 import './Posts.css';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Alert from '../../components/UI/Alert/Alert';
+import withEffect from '../../hoc/withEffect';
 
 function Posts(props) {
-    useEffect(() => {
-        props.getPost(getPostAsync());
-        // eslint-disable-next-line
-    }, []);
-
     const { loading, posts, error, comments } = props;
 
     let content = null;
@@ -23,17 +17,18 @@ function Posts(props) {
     if (error) {
         content = <Alert type='danger' message={error} />;
     } else {
-        content =  <> 
-        {posts ? posts.map(post => {
-            const { id, title, body } = post;
-            return <Post    
-                        key={id} 
-                        id={id} 
-                        title={title} 
-                        body={body} 
-                        comments={comments} 
-                    />}
-       ) : null } 
+        content =  
+        <> 
+            {posts ? posts.map(post => {
+                const { id, title, body } = post;
+                return <Post    
+                            key={id} 
+                            id={id} 
+                            title={title} 
+                            body={body} 
+                            comments={comments} 
+                        />}
+            ) : null } 
        </>;
     }
    
@@ -44,21 +39,4 @@ function Posts(props) {
     )
 }
 
-const mapStateToProps = state => {  
-    const { loading, posts, error, comments } = state;
-   
-    return {
-      loading: loading,
-      posts: posts,
-      comments: comments,
-      error: error
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        getPost: action => dispatch(action)
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Posts);
+export default withEffect(Posts);
