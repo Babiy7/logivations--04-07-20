@@ -6,8 +6,6 @@ const Collapse = props => {
     const [open, setOpen] = useState(false);
     const comments = props.comments.filter(comment => props.id === comment.postId);
 
-    console.log(props, comments);
-
     return (
         <>
             <div 
