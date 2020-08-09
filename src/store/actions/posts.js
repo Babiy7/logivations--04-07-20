@@ -20,10 +20,10 @@ const getPosts = response => {
     }
 }
 
-const getComments = comments => {
+const add = response => {
     return {
-        type: actions.FETCH_COMMENTS,
-        payload: comments
+        type: actions.ADD_POSTS,
+        payload: response
     }
 }
 
@@ -59,6 +59,19 @@ function getPostsAsync() {
                     dispatch(error(e.message));
                 });            
         }
+    }
+}
+
+export function addPost(post) {
+    return dispatch => {
+        const posts = JSON.parse(localStorage.getItem('posts'));
+        posts.unshift({
+            ...post,
+            id: posts.length + 1,
+            userId: 0
+        });
+        localStorage.setItem('posts', JSON.stringify(posts));
+        dispatch(add({ posts: posts }));
     }
 }
 

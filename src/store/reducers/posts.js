@@ -10,7 +10,7 @@ const initState = {
 
 const loading = state => updatedObject(state, { loading: true });
 const error = (state, action) => updatedObject(state, { error: action.payload, loading: false });
-const init = (state, response, key) => 
+const init = (state, response) => 
     (updatedObject(state,
         { 
             loading: false,
@@ -27,12 +27,12 @@ function posts(state = initState, action) {
         }
 
         case actions.FETCH_POSTS: {
-            return init(state, action.payload, 'posts');
+            return init(state, action.payload);
         }
       
-        // case actions.ADD_POSTS: {
-        //     return changedState(false, ...state.posts, null); 
-        // }
+        case actions.ADD_POSTS: {
+            return init(state, action.payload); 
+        }
 
         // case actions.REMOVE_POSTS: {
         //     return changedState(false, state.expenses.filter(expense => expense === action.payload), null);
