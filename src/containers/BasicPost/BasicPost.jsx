@@ -19,7 +19,7 @@ function BasicPost(props) {
     }
     
     const handleDelete = () => {
-        history.goBack();
+        history.push('/');
         props.delete(id);
     }
 
