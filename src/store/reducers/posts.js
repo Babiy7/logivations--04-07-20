@@ -10,14 +10,14 @@ const initState = {
 
 const loading = state => updatedObject(state, { loading: true });
 const error = (state, action) => updatedObject(state, { error: action.payload, loading: false });
-const init = (state, response) => 
-    (updatedObject(state,
+const init = (state, response) => {
+   return updatedObject(state,
         { 
             loading: false,
             ...response,
             error: null
-        })
-    );
+        });
+}
     
 
 function posts(state = initState, action) {
@@ -34,9 +34,9 @@ function posts(state = initState, action) {
             return init(state, action.payload); 
         }
 
-        // case actions.REMOVE_POSTS: {
-        //     return changedState(false, state.expenses.filter(expense => expense === action.payload), null);
-        // }
+        case actions.REMOVE_POSTS: {
+            return init(state, action.payload);
+        }
 
         case actions.ERROR: {
             return error(state, action);

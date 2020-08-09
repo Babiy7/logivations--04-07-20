@@ -1,4 +1,5 @@
 import * as actions from '../actionTypes';
+import { setItems, getItems } from '../../shared/helper';
 
 export const loading = () => {
     return {
@@ -27,9 +28,15 @@ const add = response => {
     }
 }
 
+const remove = response => {
+    return {
+        type: actions.REMOVE_POSTS,
+        payload: response
+    }
+}
+
 async function getData(url) {
     const response = await fetch(url);
-
     return await response.json();
 }
 
@@ -37,11 +44,11 @@ function getPostsAsync() {
     return dispatch => {
         dispatch(loading());
         
-        const posts = JSON.parse(localStorage.getItem('posts'));
-        const comments = JSON.parse(localStorage.getItem('comments'));
+        const posts = getItems('posts');
+        const comments = getItems('comments');
 
         if(posts) {
-            dispatch(getPosts({posts, comments}));
+            dispatch(getPosts({ posts, comments }));
         } else {
             Promise.all(
                 [
@@ -49,10 +56,10 @@ function getPostsAsync() {
                     getData('https://jsonplaceholder.typicode.com/comments')
                 ])
                 .then(data => {
-                    const posts = data[0];
+                    const posts = data[0].reverse();
                     const comments = data[1];
-                    localStorage.setItem('posts', JSON.stringify(posts));
-                    localStorage.setItem('comments', JSON.stringify(comments));
+                    setItems(posts, 'posts');
+                    setItems(comments, 'comments');
                     dispatch(getPosts({posts, comments}));
                 })
                 .catch(e => {
@@ -64,14 +71,23 @@ function getPostsAsync() {
 
 export function addPost(post) {
     return dispatch => {
-        const posts = JSON.parse(localStorage.getItem('posts'));
-        posts.unshift({
+        const posts = getItems('posts').reverse();
+        posts.push({
             ...post,
-            id: posts.length + 1,
+            id: posts[posts.length - 1].id + 1,
             userId: 0
         });
-        localStorage.setItem('posts', JSON.stringify(posts));
+        posts.reverse();
+        setItems(posts, 'posts');
         dispatch(add({ posts: posts }));
+    }
+}
+
+export function deletePost(id) {
+    return dispatch => {
+        const posts = getItems('posts').filter(post => post.id !== +id);
+        setItems(posts, 'posts');
+        dispatch(remove({ posts: posts }));
     }
 }
 

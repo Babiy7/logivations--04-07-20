@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import getPostAsync from '../store/actions/posts';
+import getPostAsync, { deletePost } from '../store/actions/posts';
 
 const mapStateToProps = state => {  
     const { loading, posts, error, comments } = state;
@@ -15,7 +15,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getPost: action => dispatch(action)
+        getPost: () => dispatch(getPostAsync()),
+        deletePost: id => dispatch(deletePost(id))
     }
 }
 
@@ -23,16 +24,17 @@ function withEffect(WrappedComponent) {
 
     class WithEffect extends React.Component {
         componentDidMount() {
-            this.props.getPost(getPostAsync());
+            this.props.getPost();
         }
 
         render() {
-            const { comments, posts, loading, error } = this.props;
+            const { comments, posts, loading, error, deletePost } = this.props;
             return <WrappedComponent 
                         comments={comments} 
                         posts={posts} 
                         loading={loading} 
-                        error={error} 
+                        error={error}
+                        delete={deletePost} 
                     />
         }
     }
