@@ -15,7 +15,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getPost: action => dispatch(action),
+        getPost: () => dispatch(getPostAsync()),
         deletePost: id => dispatch(deletePost(id))
     }
 }
@@ -24,7 +24,7 @@ function withEffect(WrappedComponent) {
 
     class WithEffect extends React.Component {
         componentDidMount() {
-            this.props.getPost(getPostAsync());
+            this.props.getPost();
         }
 
         render() {
