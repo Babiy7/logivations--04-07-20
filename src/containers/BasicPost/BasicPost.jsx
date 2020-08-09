@@ -35,7 +35,7 @@ function BasicPost(props) {
         const [ post ] = posts.filter(post => post.id === +id);
         const { title, body } = post;
         content = ( 
-            <div className='basic-post__container'>
+           <>
                 <div className="basic-post card">
                     <div className="basic-post__header card-header">
                         <button className="basic-post__return" onClick={handleClick} ></button>
@@ -50,7 +50,7 @@ function BasicPost(props) {
                 <div className='basic-post__footer'>
                     <Fab type='edit' />
                 </div>
-            </div>
+          </>
         )
     }
 

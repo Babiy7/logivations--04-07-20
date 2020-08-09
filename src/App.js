@@ -10,7 +10,6 @@ import Posts from './containers/Posts/Posts';
 import BasicPost from './containers/BasicPost/BasicPost';
 
 function App() {
-
   return (
     <Router>
       <div className="app">
