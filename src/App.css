@@ -3,14 +3,9 @@
 }
 
 .app-container {
+    height: 100%;
     display: flex;
     justify-content: center;
     padding-top: 50px;
     padding-bottom: 50px;
-}
-
-.app-footer {
-    position: fixed;
-    bottom: 16px;
-    right: 16px;
 }

@@ -1,5 +1,11 @@
+.basic-post__container {
+    height: 100%;
+    position: relative;
+}
+
 .basic-post {
     width: 50%;
+    margin: 0 auto;
 }
 
 .basic-post__header {
@@ -50,4 +56,10 @@
 .basic-post__delete:hover {
     outline: none;
     background-color: rgba(0, 0, 0, 0.2);
+}
+
+.basic-post__footer {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
 }
