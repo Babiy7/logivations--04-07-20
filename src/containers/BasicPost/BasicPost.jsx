@@ -17,6 +17,11 @@ function BasicPost(props) {
     const handleClick = () => {
         history.push('/');
     }
+    
+    const handleDelete = () => {
+        history.push('/');
+        props.delete(id);
+    }
 
     if(loading) {
         content = <Spinner />;
@@ -32,8 +37,9 @@ function BasicPost(props) {
         content = ( 
             <div className="basic-post card">
                 <div className="basic-post__header card-header">
-                    <button className="basic-post__button" onClick={handleClick} ></button>
+                    <button className="basic-post__return" onClick={handleClick} ></button>
                     <div className="basic-post__title" >{title ? title : null}</div>
+                    <button className="basic-post__delete" onClick={handleDelete} ></button>
                 </div>
                 <div className="card-body">
                     <p className="card-text">{body ? body : null}</p>

@@ -27,6 +27,13 @@ const add = response => {
     }
 }
 
+const remove = response => {
+    return {
+        type: actions.REMOVE_POSTS,
+        payload: response
+    }
+}
+
 async function getData(url) {
     const response = await fetch(url);
 
@@ -62,9 +69,13 @@ function getPostsAsync() {
     }
 }
 
+function getItems(key) {
+    return JSON.parse(localStorage.getItem(key))
+}
+
 export function addPost(post) {
     return dispatch => {
-        const posts = JSON.parse(localStorage.getItem('posts'));
+        const posts = getItems('posts');
         posts.unshift({
             ...post,
             id: posts.length + 1,
@@ -72,6 +83,14 @@ export function addPost(post) {
         });
         localStorage.setItem('posts', JSON.stringify(posts));
         dispatch(add({ posts: posts }));
+    }
+}
+
+export function deletePost(id) {
+    return dispatch => {
+        const posts = getItems('posts').filter(post => post.id !== +id);
+        localStorage.setItem('posts', JSON.stringify(posts));
+        dispatch(remove({ posts: posts }));
     }
 }
 

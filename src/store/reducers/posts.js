@@ -34,9 +34,9 @@ function posts(state = initState, action) {
             return init(state, action.payload); 
         }
 
-        // case actions.REMOVE_POSTS: {
-        //     return changedState(false, state.expenses.filter(expense => expense === action.payload), null);
-        // }
+        case actions.REMOVE_POSTS: {
+            return init(state, action.payload);
+        }
 
         case actions.ERROR: {
             return error(state, action);
