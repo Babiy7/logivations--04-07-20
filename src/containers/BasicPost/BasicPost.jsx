@@ -1,18 +1,92 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './BasicPost.css';
 
 import { useParams, useHistory } from 'react-router-dom';
-import withEffect from '../../hoc/withEffect';
+import { connect } from 'react-redux';
+import getPostAsync, { deletePost } from '../../store/actions/posts';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Alert from '../../components/UI/Alert/Alert';
 import Collapse from '../../components/Collapse/Collapse';
 import Fab from '../../components/UI/FabButton/FabButton';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+
+function ChangeContent(props) {
+    const { state, handleChange, handleEdit } = props;
+    return  ( 
+        <div className="basic-post card">
+            <div className="basic-post__header card-header">        
+                <TextField 
+                    name='title' 
+                    className='basic-post__input'
+                    value={state.post.title} 
+                    variant="outlined" 
+                    onChange={handleChange} 
+                />  
+            </div>
+            <div className="card-body">
+                <TextField 
+                    name='body' 
+                    className='basic-post__input' 
+                    multiline
+                    rows={7}
+                    value={state.post.body} 
+                    variant="outlined" 
+                    onChange={handleChange} 
+                />                             
+            </div>    
+            <div className='basic-post__change-footer'>
+                <Button 
+                    variant="contained" 
+                    color="primary" 
+                    size='medium' 
+                    fullWidth={true} 
+                    className='basic-post__button' 
+                    onClick={handleEdit}
+                >
+                    Edit
+                </Button>                     
+            </div>
+        </div>
+    )
+}
+
+function Content(props) {
+    const { state, handleClick, handleDelete, handleOpen, comments } = props;
+    return  ( 
+    <>
+        <div className="basic-post card">
+            <div className="basic-post__header card-header">        
+                <button className="basic-post__return" onClick={handleClick} />
+                <div className="basic-post__title" >{state.post.title ? state.post.title : null}</div>
+                <button className="basic-post__delete" onClick={handleDelete} />       
+            </div>
+            <div className="card-body">
+                <p className="card-text">{state.post.body ? state.post.body : null}</p>                                   
+            </div> 
+            <Collapse comments={comments} id={state.post.id} />                          
+        </div>
+        <div className='basic-post__footer'>
+            <Fab type='edit' handleOpen={handleOpen} />
+        </div> 
+    </>
+)}
+
 
 function BasicPost(props) {
     const { loading, posts, error, comments } = props;
+    const [state, setState] = useState({ post: '', change: false });
     const { id } = useParams();
     const history = useHistory();
     let content = null;
+
+    useEffect(() => {
+        if(posts.length === 0) {
+            props.getPost();
+        }
+        setState({...state, post: posts.filter(post => post.id === +id)[0]});
+        // eslint-disable-next-line
+    }, [props]);
 
     const handleClick = () => {
         history.goBack();
@@ -20,7 +94,27 @@ function BasicPost(props) {
     
     const handleDelete = () => {
         history.push('/');
-        props.delete(id);
+        props.deletePost(id);
+    }
+
+    const handleChange = e => {
+        const { name, value } = e.target;
+
+        setState({
+            ...state,
+            post: {
+                ...state.post,
+                [name]: value
+            }
+        });
+    }
+
+    const handleOpen = () => {
+        setState({ ...state, change: !state.change });
+    }
+
+    const handleEdit = () => {
+        setState({ ...state, change: !state.change });
     }
 
     if(loading) {
@@ -31,30 +125,39 @@ function BasicPost(props) {
         content = <Alert type='danger' message={error} />;
     }
 
-    if(posts.length > 0) {   
-        const [ post ] = posts.filter(post => post.id === +id);
-        const { title, body } = post;
-        content = ( 
-           <>
-                <div className="basic-post card">
-                    <div className="basic-post__header card-header">
-                        <button className="basic-post__return" onClick={handleClick} ></button>
-                        <div className="basic-post__title" >{title ? title : null}</div>
-                        <button className="basic-post__delete" onClick={handleDelete} ></button>
-                    </div>
-                    <div className="card-body">
-                        <p className="card-text">{body ? body : null}</p>
-                    </div>
-                    <Collapse comments={comments} id={post.id} />
-                </div>
-                <div className='basic-post__footer'>
-                    <Fab type='edit' />
-                </div>
-          </>
-        )
+    if(posts.length > 0 && state.post) {   
+        content = state.change 
+        ? 
+        <ChangeContent state={state} handleChange={handleChange} handleEdit={handleEdit} /> 
+        : 
+        <Content 
+            state={state} 
+            comments={comments} 
+            handleClick={handleClick} 
+            handleDelete={handleDelete} 
+            handleOpen={handleOpen} 
+        />;
     }
 
     return content;
 }
 
-export default withEffect(BasicPost);
+const mapStateToProps = state => {  
+    const { loading, posts, error, comments } = state;
+   
+    return {
+      loading: loading,
+      posts: posts,
+      comments: comments,
+      error: error
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getPost: () => dispatch(getPostAsync()),
+        deletePost: id => dispatch(deletePost(id))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BasicPost);

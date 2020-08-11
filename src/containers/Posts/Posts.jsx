@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import Post from '../../components/Post/Post';
 import './Posts.css';
 import Spinner from '../../components/UI/Spinner/Spinner';
@@ -12,6 +12,8 @@ function Posts(props) {
     const [open, setOpen] = useState(false);
     const { loading, posts, error, comments } = props;
     let content = null;
+
+    console.log('Posts rendering');
 
     const handleOpen = () => {
         setOpen(true);
@@ -56,4 +58,4 @@ function Posts(props) {
     )
 }
 
-export default withEffect(Posts);
+export default memo(withEffect(Posts));
