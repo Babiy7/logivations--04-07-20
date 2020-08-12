@@ -1,22 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
 import { createStore, applyMiddleware } from 'redux';
-import posts from '../src/store/reducers/posts';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
+import posts from './store/reducers/posts';
 
 const store = createStore(posts, applyMiddleware(thunk));
 
 ReactDOM.render(
-    <Provider store={store}>
-      <React.StrictMode>
-          <App />
-      </React.StrictMode>
-    </Provider>,
-  document.getElementById('root')
+  <Provider store={store}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </Provider>,
+  document.getElementById('root'),
 );
 
 // If you want your app to work offline and load faster, you can change
@@ -24,14 +24,13 @@ ReactDOM.render(
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
 
-
 // function queueTime(customers, till) {
 //   let time = 0;
 //   let firstTill = 0;
 //   let secondTill = 0;
 
 //   if(till === 1 && customers.length > 0) {
-//     return customers.reduce((prev, current) => prev + current);    
+//     return customers.reduce((prev, current) => prev + current);
 //   }
 
 //   if(customers.length === 0) {
@@ -48,10 +47,10 @@ serviceWorker.unregister();
 //     if(firstTill > secondTill) {
 //       secondTill += customers[++i];
 //     } else {
-      
+
 //     }
 
-//   } 
+//   }
 
 //   console.log('next code');
 
