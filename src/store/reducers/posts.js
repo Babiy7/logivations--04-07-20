@@ -30,8 +30,7 @@ function posts(state = initState, action) {
     }
 
     case actions.UPDATE_POSTS: {
-      const sortedPosts = sorted(action.payload, state.filter);
-      return updateState(state, sortedPosts);
+      return updateState(state, action.payload);
     }
 
     case actions.ERROR: {
@@ -40,8 +39,6 @@ function posts(state = initState, action) {
 
     case actions.SET_FILTER: {
       const sortedPosts = sorted(state.posts, action.payload);
-      console.log(sortedPosts);
-
       return filter(state, { filter: action.payload, posts: sortedPosts });
     }
 

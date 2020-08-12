@@ -67,7 +67,7 @@ export function addPost(post) {
     });
     posts.reverse();
     setItems(posts, 'posts');
-    dispatch(updatePosts({ posts }));
+    dispatch(updatePosts(posts));
   };
 }
 
@@ -75,7 +75,7 @@ export function deletePost(id) {
   return (dispatch, getState) => {
     const posts = [...getState().posts].filter((post) => post.id !== +id);
     setItems(posts, 'posts');
-    dispatch(updatePosts({ posts }));
+    dispatch(updatePosts(posts));
   };
 }
 
@@ -91,7 +91,8 @@ export function editPost(id, newPost) {
       return post;
     });
     setItems(posts, 'posts');
-    dispatch(updatePosts({ posts }));
+    console.log(posts);
+    dispatch(updatePosts(posts));
   };
 }
 
