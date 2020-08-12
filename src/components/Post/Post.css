@@ -21,6 +21,8 @@
 .post__content {}
 
 .post__comments {
+    display: flex;
+    justify-content: space-between;
     margin: 15px;
     opacity: 0.5;
 }

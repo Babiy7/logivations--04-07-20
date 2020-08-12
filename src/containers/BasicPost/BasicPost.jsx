@@ -77,10 +77,11 @@ function Content(props) {
 
 function BasicPost(props) {
   const {
-    loading, posts, error, comments,
+    loading, posts, error,
   } = props;
-  const [state, setState] = useState({ post: '', change: false });
   const { id } = useParams();
+  const post = posts.filter((p) => p.id === +id)[0];
+  const [state, setState] = useState({ post: '', change: false });
   const history = useHistory();
   let content = null;
 
@@ -88,7 +89,7 @@ function BasicPost(props) {
     if (posts.length === 0) {
       props.getPost();
     }
-    setState((s) => ({ ...s, post: posts.filter((post) => post.id === +id)[0] }));
+    setState((s) => ({ ...s, post }));
   }, [props]);
 
   const handleClick = () => {
@@ -135,7 +136,7 @@ function BasicPost(props) {
       : (
         <Content
           state={state}
-          comments={comments}
+          comments={post.comments}
           handleClick={handleClick}
           handleDelete={handleDelete}
           handleOpen={handleOpen}
@@ -148,13 +149,12 @@ function BasicPost(props) {
 
 const mapStateToProps = (state) => {
   const {
-    loading, posts, error, comments,
+    loading, posts, error,
   } = state;
 
   return {
     loading,
     posts,
-    comments,
     error,
   };
 };

@@ -6,18 +6,9 @@ function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 }
 
-const mapStateToProps = (state) => {
-  const {
-    loading, posts, error, comments,
-  } = state;
-
-  return {
-    loading,
-    posts,
-    comments,
-    error,
-  };
-};
+const mapStateToProps = (state) => ({
+  ...state,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   getPost: () => dispatch(getPostAsync()),
@@ -31,16 +22,9 @@ function withEffect(WrappedComponent) {
     }
 
     render() {
-      const {
-        comments, posts, loading, error, deletePost,
-      } = this.props;
       return (
         <WrappedComponent
-          comments={comments}
-          posts={posts}
-          loading={loading}
-          error={error}
-          delete={deletePost}
+          {...this.props}
         />
       );
     }

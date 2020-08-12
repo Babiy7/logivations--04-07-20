@@ -26,10 +26,9 @@ function getPostsAsync() {
     dispatch(loading());
 
     const posts = getItems('posts');
-    const comments = getItems('comments');
 
     if (posts) {
-      dispatch(updatePosts({ posts, comments }));
+      dispatch(updatePosts(posts));
     } else {
       Promise.all(
         [
@@ -38,11 +37,18 @@ function getPostsAsync() {
         ],
       )
         .then((data) => {
-          const posts = data[0].reverse();
-          const comments = data[1];
-          setItems(posts, 'posts');
-          setItems(comments, 'comments');
-          dispatch(updatePosts({ posts, comments }));
+          let resPosts = data[0].reverse();
+          const resComments = data[1];
+          resPosts = resPosts.map((post) => {
+            const postComments = resComments.filter((comment) => post.id === comment.postId);
+            return {
+              ...post,
+              comments: postComments,
+              views: Math.floor(Math.random() * 100),
+            };
+          });
+          setItems(resPosts, 'posts');
+          dispatch(updatePosts(resPosts));
         })
         .catch((e) => {
           dispatch(error(e.message));
