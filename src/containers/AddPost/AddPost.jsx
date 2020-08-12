@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
 import { connect } from 'react-redux';
-import { addPost } from '../../store/actions/posts';
 
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import { addPost } from '../../store/actions/posts';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,36 +15,36 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   container: {
-      display: 'flex',
-      justifyContent: 'flex-end'
-  }
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
 }));
 
 function AddPost(props) {
   const classes = useStyles();
   const [state, setState] = useState({
-      title: '',
-      body: ''
+    title: '',
+    body: '',
   });
 
   function handleChange(e) {
-     const { name, value } = e.target;  
-     
-     setState({
-         ...state,
-         [name]: value
-     })
+    const { name, value } = e.target;
+
+    setState({
+      ...state,
+      [name]: value,
+    });
   }
 
   function handleClick() {
-      if(state.title && state.body) {
-          props.addPost(state);
-          props.handleClose();
-      }
+    if (state.title && state.body) {
+      props.addPost(state);
+      props.handleClose();
+    }
   }
 
   return (
-    <form className={classes.root} noValidate autoComplete="off"> 
+    <form className={classes.root} noValidate autoComplete="off">
       <div>
         <TextField
           id="outlined-required"
@@ -53,8 +53,8 @@ function AddPost(props) {
           variant="outlined"
           onChange={handleChange}
         />
-       
-       <TextField
+
+        <TextField
           id="outlined-multiline-static"
           label="Text"
           name="body"
@@ -64,19 +64,17 @@ function AddPost(props) {
           onChange={handleChange}
         />
         <div className={classes.container}>
-            <Button variant="contained" color="primary" onClick={handleClick} >
-                Add
-            </Button>
+          <Button variant="contained" color="primary" onClick={handleClick}>
+            Add
+          </Button>
         </div>
       </div>
     </form>
   );
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        addPost: post => dispatch(addPost(post))
-    }
-}
+const mapDispatchToProps = (dispatch) => ({
+  addPost: (post) => dispatch(addPost(post)),
+});
 
 export default connect(null, mapDispatchToProps)(AddPost);

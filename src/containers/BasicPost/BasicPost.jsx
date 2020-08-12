@@ -5,7 +5,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import getPostAsync, { deletePost } from '../../store/actions/posts';
+import getPostAsync, { deletePost, editPost } from '../../store/actions/posts';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Alert from '../../components/UI/Alert/Alert';
 import Collapse from '../../components/Collapse/Collapse';
@@ -88,7 +88,7 @@ function BasicPost(props) {
     if (posts.length === 0) {
       props.getPost();
     }
-    setState({ ...state, post: posts.filter((post) => post.id === +id)[0] });
+    setState((s) => ({ ...s, post: posts.filter((post) => post.id === +id)[0] }));
   }, [props]);
 
   const handleClick = () => {
@@ -103,21 +103,22 @@ function BasicPost(props) {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setState({
-      ...state,
+    setState((s) => ({
+      ...s,
       post: {
-        ...state.post,
+        ...s.post,
         [name]: value,
       },
-    });
+    }));
   };
 
   const handleOpen = () => {
-    setState({ ...state, change: !state.change });
+    setState((s) => ({ ...s, change: !s.change }));
   };
 
   const handleEdit = () => {
-    setState({ ...state, change: !state.change });
+    setState((s) => ({ ...s, change: !s.change }));
+    props.editPost(id, state.post);
   };
 
   if (loading) {
@@ -161,6 +162,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   getPost: () => dispatch(getPostAsync()),
   deletePost: (id) => dispatch(deletePost(id)),
+  editPost: (id, newPost) => dispatch(editPost(id, newPost)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BasicPost);
