@@ -24,13 +24,15 @@ const filter = (state, payload) => updatedObject(state,
   });
 
 function posts(state = initState, action) {
+  let sortedPosts;
   switch (action.type) {
     case actions.LOADING: {
       return loading(state);
     }
 
     case actions.UPDATE_POSTS: {
-      return updateState(state, action.payload);
+      sortedPosts = sorted(action.payload, state.filter);
+      return updateState(state, sortedPosts);
     }
 
     case actions.ERROR: {
@@ -38,7 +40,7 @@ function posts(state = initState, action) {
     }
 
     case actions.SET_FILTER: {
-      const sortedPosts = sorted(state.posts, action.payload);
+      sortedPosts = sorted(state.posts, action.payload);
       return filter(state, { filter: action.payload, posts: sortedPosts });
     }
 

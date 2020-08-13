@@ -24,7 +24,7 @@ async function getData(url) {
 function getPostsAsync() {
   return (dispatch) => {
     dispatch(loading());
-
+    console.log('getPosts');
     const posts = getItems('posts');
 
     if (posts) {
@@ -65,6 +65,7 @@ export function addPost(post) {
       id: posts[posts.length - 1].id + 1,
       userId: 0,
       comments: [],
+      views: Math.floor(Math.random() * 20),
     });
     posts.reverse();
     setItems(posts, 'posts');
@@ -92,7 +93,6 @@ export function editPost(id, newPost) {
       return post;
     });
     setItems(posts, 'posts');
-    console.log(posts);
     dispatch(updatePosts(posts));
   };
 }
