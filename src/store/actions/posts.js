@@ -64,6 +64,7 @@ export function addPost(post) {
       ...post,
       id: posts[posts.length - 1].id + 1,
       userId: 0,
+      comments: [],
     });
     posts.reverse();
     setItems(posts, 'posts');
