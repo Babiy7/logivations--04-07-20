@@ -1,10 +1,13 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { connect } from 'react-redux';
 import { SET_FILTER } from '../../../store/actionTypes';
 
 function Navigation(props) {
-  const handleClick = (filter) => {
-    props.setFilter(filter);
+  const { filter } = props;
+  const handleClick = (name) => {
+    props.setFilter(name);
   };
 
   return (
@@ -15,7 +18,7 @@ function Navigation(props) {
         <ul className="navbar-nav pr-5">
           <li className="nav-item dropdown mr-5">
             <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {props.filter}
+              {filter}
             </a>
             <div className="dropdown-menu mr-5" aria-labelledby="navbarDropdown">
               { ['Default filter', 'Comments', 'Views', 'Latest'].map((item, i, array) => (

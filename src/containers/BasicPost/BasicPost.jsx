@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import './BasicPost.css';
 
@@ -59,9 +61,9 @@ function Content(props) {
     <>
       <div className="basic-post card">
         <div className="basic-post__header card-header">
-          <button className="basic-post__return" onClick={handleClick} />
+          <button type="button" className="basic-post__return" onClick={handleClick} />
           <div className="basic-post__title">{state.post.title ? state.post.title : null}</div>
-          <button className="basic-post__delete" onClick={handleDelete} />
+          <button type="button" className="basic-post__delete" onClick={handleDelete} />
         </div>
         <div className="card-body">
           <p className="card-text">{state.post.body ? state.post.body : null}</p>

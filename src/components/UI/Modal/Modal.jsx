@@ -1,10 +1,11 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 
 function getModalStyle() {
   const top = 50;
-  const left = 50 ;
+  const left = 50;
 
   return {
     top: `${top}%`,
@@ -25,13 +26,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SimpleModal(props) {
+  const { children, open, handleClose } = props;
   const classes = useStyles();
-  // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
-  
+
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      {props.children}
+      {children}
       <SimpleModal />
     </div>
   );
@@ -39,8 +40,8 @@ export default function SimpleModal(props) {
   return (
     <div>
       <Modal
-        open={props.open}
-        onClose={props.handleClose}
+        open={open}
+        onClose={handleClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >

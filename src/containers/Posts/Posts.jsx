@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState, memo } from 'react';
 import Post from '../../components/Post/Post';
 import './Posts.css';

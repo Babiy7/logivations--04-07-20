@@ -9,7 +9,8 @@ export const sorted = (state, action) => {
 
   switch (action) {
     case 'Comments': {
-      return posts.sort((postFirst, postSecond) => postSecond.comments.length - postFirst.comments.length);
+      return posts.sort((postFirst, postSecond) => postSecond.comments.length
+       - postFirst.comments.length);
     }
 
     case 'Views': {
@@ -17,6 +18,10 @@ export const sorted = (state, action) => {
     }
 
     case 'Latest': {
+      return posts;
+    }
+
+    case 'Default filter': {
       return posts;
     }
 
