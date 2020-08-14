@@ -18,11 +18,11 @@ export const sorted = (state, action) => {
     }
 
     case 'Latest': {
-      return posts;
+      return posts.sort((postFirst, postSecond) => postSecond.id - postFirst.id);
     }
 
     case 'Default filter': {
-      return posts;
+      return posts.sort((postFirst, postSecond) => postSecond.id - postFirst.id);
     }
 
     default: {

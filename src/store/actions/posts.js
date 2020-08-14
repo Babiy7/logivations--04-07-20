@@ -1,5 +1,5 @@
 import * as actions from '../actionTypes';
-import { setItems, getItems } from '../../shared/helper';
+import { setItems, getItems, sorted } from '../../shared/helper';
 
 export const loading = () => ({
   type: actions.LOADING,
@@ -24,7 +24,7 @@ async function getData(url) {
 function getPostsAsync() {
   return (dispatch) => {
     dispatch(loading());
-    console.log('getPosts');
+
     const posts = getItems('posts');
 
     if (posts) {
@@ -67,8 +67,7 @@ export function addPost(post) {
       comments: [],
       views: Math.floor(Math.random() * 20),
     });
-    posts.reverse();
-    setItems(posts, 'posts');
+    setItems(sorted(posts, 'Default filter'), 'posts');
     dispatch(updatePosts(posts));
   };
 }
