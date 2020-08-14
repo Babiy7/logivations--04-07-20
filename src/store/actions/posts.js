@@ -62,23 +62,26 @@ function getPostsAsync() {
 
 export function addPost(post) {
   return (dispatch, getState) => {
-    const posts = [...getState().posts].reverse();
-    posts.push({
+    const posts = [...getState().posts];
+    const sortedPosts = sorted(posts, 'Default filter');
+    const id = sortedPosts[0].id + 1;
+    sortedPosts.unshift({
       ...post,
-      id: posts[posts.length - 1].id + 1,
+      id,
       userId: 0,
-      comments: [],
+      comments: addRandomComments([], id),
       views: Math.floor(Math.random() * 20),
+      date: getDateString(),
     });
-    setItems(sorted(posts, 'Default filter'), 'posts');
-    dispatch(updatePosts(posts));
+    setItems(sortedPosts, 'posts');
+    dispatch(updatePosts(sortedPosts));
   };
 }
 
 export function deletePost(id) {
   return (dispatch, getState) => {
     const posts = [...getState().posts].filter((post) => post.id !== +id);
-    setItems(posts, 'posts');
+    setItems(sorted(posts, 'Default filter'), 'posts');
     dispatch(updatePosts(posts));
   };
 }
@@ -94,7 +97,7 @@ export function editPost(id, newPost) {
 
       return post;
     });
-    setItems(posts, 'posts');
+    setItems(sorted(posts, 'Default filter'), 'posts');
     dispatch(updatePosts(posts));
   };
 }
