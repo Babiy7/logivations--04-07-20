@@ -4,6 +4,8 @@ export const getItems = (key) => JSON.parse(localStorage.getItem(key));
 
 export const setItems = (items, key) => localStorage.setItem(key, JSON.stringify(items));
 
+export const random = (number) => Math.floor(Math.random() * number);
+
 export const sorted = (state, action) => {
   const posts = [...state];
 
@@ -46,7 +48,7 @@ export function getZero(number) {
 }
 
 export function getDateString() {
-  const newDate = new Date(new Date().getTime() - Math.floor(Math.random() * 2000000000));
+  const newDate = new Date(new Date().getTime() - random(2000000000));
 
   const year = newDate.getFullYear();
   const month = newDate.getMonth();
@@ -58,4 +60,21 @@ export function getDateString() {
   const stringDate = `${month}/${day}/${year} ${getZero(hours)}:${getZero(minutes)}:${getZero(seconds)}`;
 
   return stringDate;
+}
+
+export function addRandomComments(comments, postId) {
+  const number = random(5);
+  const newComments = [...comments];
+
+  for (let i = 0; i < number; i += 1) {
+    newComments.push({
+      body: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit.',
+      name: 'Est tenetur nisi pariatur, esse explicabo vitae obcaecati cum praesentium amet',
+      email: 'comment@gmail.com',
+      id: random(1000),
+      postId,
+    });
+  }
+
+  return newComments;
 }
