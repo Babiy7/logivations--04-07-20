@@ -1,6 +1,6 @@
 import * as actions from '../actionTypes';
 import {
-  setItems, getItems, sorted, getDateString,
+  setItems, getItems, sorted, getDateString, addRandomComments,
 } from '../../shared/helper';
 
 export const loading = () => ({
@@ -45,7 +45,7 @@ function getPostsAsync() {
             const postComments = resComments.filter((comment) => post.id === comment.postId);
             return {
               ...post,
-              comments: postComments,
+              comments: addRandomComments(postComments, post.id),
               views: Math.floor(Math.random() * 100),
               date: getDateString(),
             };
