@@ -18,7 +18,11 @@ export const sorted = (state, action) => {
     }
 
     case 'Latest': {
-      return posts.sort((postFirst, postSecond) => postSecond.id - postFirst.id);
+      return posts.sort((postFirst, postSecond) => {
+        const timestampFirst = new Date(postFirst.date).getTime();
+        const timestampSecond = new Date(postSecond.date).getTime();
+        return timestampSecond - timestampFirst;
+      });
     }
 
     case 'Default filter': {

@@ -35,7 +35,7 @@ function Posts(props) {
       <>
         {posts ? posts.map((post) => {
           const {
-            id, title, body, comments, views,
+            id, title, body, comments, views, date,
           } = post;
           return (
             <Post
@@ -45,6 +45,7 @@ function Posts(props) {
               body={body}
               comments={comments}
               views={views}
+              date={date}
             />
           );
         }) : null }

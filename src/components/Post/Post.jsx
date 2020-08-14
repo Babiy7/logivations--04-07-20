@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 
 function Post(props) {
   const {
-    id, title, body, comments, views,
+    id, title, body, comments, views, date,
   } = props;
   const history = useHistory();
 
@@ -17,24 +17,29 @@ function Post(props) {
 
   return (
     <div
-      className="post card m-2 card-hover"
+      className="post card m-2"
       style={{ width: '18rem' }}
       onClick={handleClick}
     >
       <div className="card-body">
-        <h5 className="card-title">{title}</h5>
-        <p className="card-text">{body}</p>
+        <h5 className="post__title card-title">{title}</h5>
+        <p className="post__content card-text">{body}</p>
       </div>
-      <p className="post__comments">
+      <p className="post__footer">
         <div>
-          comments:
-          {' '}
-          {comments.length}
+          <div>
+            comments:
+            {' '}
+            {comments.length}
+          </div>
+          <div>
+            views:
+            {' '}
+            {views}
+          </div>
         </div>
-        <div>
-          views:
-          {' '}
-          {views}
+        <div className="post__date">
+          {date}
         </div>
       </p>
     </div>
