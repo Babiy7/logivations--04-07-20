@@ -11,13 +11,11 @@ import posts from './store/reducers/posts';
 
 const store = createStore(posts, applyMiddleware(thunk));
 
-// const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+// console.log(date, newDate);
 
-// console.log('array', array);
-
-// array.reverse();
-
-// console.log('reversed', array);
+// console.log('day', date.getDate(), 'month', date.getMonth() + 1, 'year', date.getFullYear(),
+// 'hours',
+// date.getHours(), 'minutes', date.getMinutes(), 'seconds', date.getSeconds());
 
 ReactDOM.render(
   <Provider store={store}>
