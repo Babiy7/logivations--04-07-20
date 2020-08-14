@@ -1,6 +1,6 @@
 import * as actions from '../actionTypes';
 import {
-  setItems, getItems, sorted, getDateString,
+  setItems, getItems, sorted, getDateString, addRandomComments, random,
 } from '../../shared/helper';
 
 export const loading = () => ({
@@ -45,8 +45,8 @@ function getPostsAsync() {
             const postComments = resComments.filter((comment) => post.id === comment.postId);
             return {
               ...post,
-              comments: postComments,
-              views: Math.floor(Math.random() * 100),
+              comments: addRandomComments(postComments, post.id),
+              views: random(100),
               date: getDateString(),
             };
           });
@@ -78,7 +78,7 @@ export function addPost(post) {
 export function deletePost(id) {
   return (dispatch, getState) => {
     const posts = [...getState().posts].filter((post) => post.id !== +id);
-    setItems(posts, 'posts');
+    setItems(sorted(posts, 'Default filter'), 'posts');
     dispatch(updatePosts(posts));
   };
 }
@@ -94,7 +94,7 @@ export function editPost(id, newPost) {
 
       return post;
     });
-    setItems(posts, 'posts');
+    setItems(sorted(posts, 'Default filter'));
     dispatch(updatePosts(posts));
   };
 }
