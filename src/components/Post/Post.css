@@ -8,21 +8,24 @@
     cursor: pointer;
 }
 
-.post-link {
-    text-decoration: none;
-    color: black;
+.post__title {
+    font-size: 18px;
 }
 
-.post-link:hover {
-    text-decoration: none;
-    color: black;
+.post__content {
+    font-size: 14px;
 }
 
-.post__content {}
-
-.post__comments {
+.post__footer {
     display: flex;
     justify-content: space-between;
     margin: 15px;
+    font-size: 12px;
     opacity: 0.5;
 }
+
+.post__commets {}
+
+.post__views {}
+
+.post__date {}

@@ -1,5 +1,7 @@
 import * as actions from '../actionTypes';
-import { setItems, getItems, sorted } from '../../shared/helper';
+import {
+  setItems, getItems, sorted, getDateString,
+} from '../../shared/helper';
 
 export const loading = () => ({
   type: actions.LOADING,
@@ -45,6 +47,7 @@ function getPostsAsync() {
               ...post,
               comments: postComments,
               views: Math.floor(Math.random() * 100),
+              date: getDateString(),
             };
           });
           setItems(resPosts, 'posts');
