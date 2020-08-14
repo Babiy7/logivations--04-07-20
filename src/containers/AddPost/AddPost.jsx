@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import { addPost } from '../../store/actions/posts';
+import { addPostAsync } from '../../store/actions/posts';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -75,7 +75,7 @@ function AddPost(props) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  addPost: (post) => dispatch(addPost(post)),
+  addPost: (post) => dispatch(addPostAsync(post)),
 });
 
 export default connect(null, mapDispatchToProps)(AddPost);

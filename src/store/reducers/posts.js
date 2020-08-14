@@ -4,7 +4,6 @@ import { updatedObject, sorted } from '../../shared/helper';
 const initState = {
   loading: false,
   posts: [],
-  comments: [],
   filter: 'Default filter',
   error: null,
 };
@@ -19,6 +18,11 @@ const updateState = (state, response) => updatedObject(state,
   });
 
 const filter = (state, payload) => updatedObject(state,
+  {
+    loading: false, ...payload, error: null,
+  });
+
+const add = (state, payload) => updatedObject(state,
   {
     loading: false, ...payload, error: null,
   });
@@ -42,6 +46,12 @@ function posts(state = initState, action) {
     case actions.SET_FILTER: {
       sortedPosts = sorted(state.posts, action.payload);
       return filter(state, { filter: action.payload, posts: sortedPosts });
+    }
+
+    case actions.ADD_POSTS: {
+      sortedPosts = sorted(state.posts, 'Default filter');
+      sortedPosts.unshift(action.payload);
+      return add(state, { posts: sortedPosts, filter: 'Default filter' });
     }
 
     default: {
