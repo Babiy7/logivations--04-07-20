@@ -37,7 +37,7 @@ export const sorted = (state, action) => {
   }
 };
 
-export function getZero(number) {
+export const getZero = (number) => {
   let newNumber;
   if (number < 10) {
     newNumber = `0${number}`;
@@ -45,9 +45,9 @@ export function getZero(number) {
   }
 
   return number;
-}
+};
 
-export function getDateString() {
+export const getDateString = () => {
   const newDate = new Date(new Date().getTime() - random(2000000000));
 
   const year = newDate.getFullYear();
@@ -60,9 +60,9 @@ export function getDateString() {
   const stringDate = `${month}/${day}/${year} ${getZero(hours)}:${getZero(minutes)}:${getZero(seconds)}`;
 
   return stringDate;
-}
+};
 
-export function addRandomComments(comments, postId) {
+export const addRandomComments = (comments, postId) => {
   const number = random(5);
   const newComments = [...comments];
 
@@ -77,4 +77,4 @@ export function addRandomComments(comments, postId) {
   }
 
   return newComments;
-}
+};
