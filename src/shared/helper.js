@@ -47,8 +47,8 @@ export const getZero = (number) => {
   return number;
 };
 
-export const getDateString = () => {
-  const newDate = new Date(new Date().getTime() - random(2000000000));
+export const getDateString = (isNow) => {
+  const newDate = isNow ? new Date() : new Date(new Date().getTime() - random(2000000000));
 
   const year = newDate.getFullYear();
   const month = newDate.getMonth();

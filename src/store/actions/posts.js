@@ -71,7 +71,7 @@ export function addPost(post) {
       userId: 0,
       comments: addRandomComments([], id),
       views: Math.floor(Math.random() * 20),
-      date: getDateString(),
+      date: getDateString(true),
     });
     setItems(sortedPosts, 'posts');
     dispatch(updatePosts(sortedPosts));
