@@ -1,6 +1,6 @@
 import * as actions from '../actionTypes';
 import {
-  setItems, getItems, sorted, getDateString, addRandomComments,
+  setItems, getItems, sorted, getDateString, addRandomComments, random,
 } from '../../shared/helper';
 
 export const loading = () => ({
@@ -17,6 +17,11 @@ const updatePosts = (response) => ({
   payload: response,
 });
 
+const addPost = (post) => ({
+  type: actions.ADD_POSTS,
+  payload: post,
+});
+
 async function getData(url) {
   const response = await fetch(url);
   const data = await response.json();
@@ -26,7 +31,6 @@ async function getData(url) {
 function getPostsAsync() {
   return (dispatch) => {
     dispatch(loading());
-
     const posts = getItems('posts');
 
     if (posts) {
@@ -46,7 +50,7 @@ function getPostsAsync() {
             return {
               ...post,
               comments: addRandomComments(postComments, post.id),
-              views: Math.floor(Math.random() * 100),
+              views: random(100),
               date: getDateString(),
             };
           });
@@ -60,21 +64,22 @@ function getPostsAsync() {
   };
 }
 
-export function addPost(post) {
+export function addPostAsync(post) {
   return (dispatch, getState) => {
     const posts = [...getState().posts];
     const sortedPosts = sorted(posts, 'Default filter');
     const id = sortedPosts[0].id + 1;
-    sortedPosts.unshift({
+    const newPost = {
       ...post,
       id,
       userId: 0,
       comments: addRandomComments([], id),
-      views: Math.floor(Math.random() * 20),
+      views: random(20),
       date: getDateString(true),
-    });
+    };
+    sortedPosts.unshift(newPost);
     setItems(sortedPosts, 'posts');
-    dispatch(updatePosts(sortedPosts));
+    dispatch(addPost(newPost));
   };
 }
 
@@ -94,7 +99,6 @@ export function editPost(id, newPost) {
           ...newPost,
         };
       }
-
       return post;
     });
     setItems(sorted(posts, 'Default filter'), 'posts');

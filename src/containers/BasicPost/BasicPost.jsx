@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './BasicPost.css';
 
 import { useParams, useHistory } from 'react-router-dom';
@@ -15,14 +15,23 @@ import Fab from '../../components/UI/FabButton/FabButton';
 
 function ChangeContent(props) {
   const { state, handleChange, handleEdit } = props;
+  const inputEl = useRef(null);
+
+  useEffect(() => {
+    const element = inputEl.current;
+    element.focus();
+  }, []);
+
   return (
     <div className="basic-post card">
       <div className="basic-post__header card-header">
         <TextField
+          inputRef={inputEl}
           name="title"
           className="basic-post__input"
           value={state.post.title}
           variant="outlined"
+          label="title"
           onChange={handleChange}
         />
       </div>
@@ -32,6 +41,7 @@ function ChangeContent(props) {
           className="basic-post__input"
           multiline
           rows={7}
+          label="text"
           value={state.post.body}
           variant="outlined"
           onChange={handleChange}

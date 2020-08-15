@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import { connect } from 'react-redux';
 
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import { addPost } from '../../store/actions/posts';
+import { addPostAsync } from '../../store/actions/posts';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,6 +27,11 @@ function AddPost(props) {
     title: '',
     body: '',
   });
+  const inputEl = useRef({ value: 'Owen' });
+
+  useEffect(() => {
+    inputEl.current.focus();
+  }, []);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -48,6 +53,7 @@ function AddPost(props) {
     <form className={classes.root} noValidate autoComplete="off">
       <div>
         <TextField
+          inputRef={inputEl}
           id="outlined-required"
           label="Title"
           name="title"
@@ -75,7 +81,7 @@ function AddPost(props) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  addPost: (post) => dispatch(addPost(post)),
+  addPost: (post) => dispatch(addPostAsync(post)),
 });
 
 export default connect(null, mapDispatchToProps)(AddPost);
