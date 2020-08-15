@@ -1,6 +1,6 @@
 import * as actions from '../actionTypes';
 import {
-  setItems, getItems, sorted, getDateString, addRandomComments,
+  setItems, getItems, sorted, getDateString, addRandomComments, random,
 } from '../../shared/helper';
 
 export const loading = () => ({
@@ -50,7 +50,7 @@ function getPostsAsync() {
             return {
               ...post,
               comments: addRandomComments(postComments, post.id),
-              views: Math.floor(Math.random() * 100),
+              views: random(100),
               date: getDateString(),
             };
           });
@@ -74,7 +74,7 @@ export function addPostAsync(post) {
       id,
       userId: 0,
       comments: addRandomComments([], id),
-      views: Math.floor(Math.random() * 20),
+      views: random(20),
       date: getDateString(true),
     };
     sortedPosts.unshift(newPost);

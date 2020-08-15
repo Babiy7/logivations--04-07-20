@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import { connect } from 'react-redux';
 
@@ -27,6 +27,11 @@ function AddPost(props) {
     title: '',
     body: '',
   });
+  const inputEl = useRef({ value: 'Owen' });
+
+  useEffect(() => {
+    inputEl.current.focus();
+  }, []);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -48,6 +53,7 @@ function AddPost(props) {
     <form className={classes.root} noValidate autoComplete="off">
       <div>
         <TextField
+          inputRef={inputEl}
           id="outlined-required"
           label="Title"
           name="title"
