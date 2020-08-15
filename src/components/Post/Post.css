@@ -1,0 +1,31 @@
+.post {
+    height: 350px;
+    transition: all 0.3s ease;
+}
+
+.post:hover {
+    background: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.post__title {
+    font-size: 18px;
+}
+
+.post__content {
+    font-size: 14px;
+}
+
+.post__footer {
+    display: flex;
+    justify-content: space-between;
+    margin: 15px;
+    font-size: 12px;
+    opacity: 0.5;
+}
+
+.post__commets {}
+
+.post__views {}
+
+.post__date {}

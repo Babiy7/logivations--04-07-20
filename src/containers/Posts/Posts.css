@@ -1,0 +1,12 @@
+.posts {
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.posts__footer {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+}
