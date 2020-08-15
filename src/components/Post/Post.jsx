@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -8,7 +9,7 @@ import { useHistory } from 'react-router-dom';
 function Post(props) {
   const {
     id, title, body, comments, views, date,
-  } = props;
+  } = props.post;
   const history = useHistory();
 
   const handleClick = () => {
