@@ -1,5 +1,5 @@
 .basic-post {
-    width: 35%;
+    width: 40%;
     margin: 0 auto;
 }
 
@@ -59,10 +59,6 @@
     right: 16px;
 }
 
-.basic-post__input {
-    width: 100%;
-}
-
-.basic-post__change-footer {
-    padding: 0 20px 20px 20px;
+.change-content {
+    width: 400px;
 }
