@@ -31,26 +31,7 @@ function Posts(props) {
   if (error) {
     content = <Alert type="danger" message={error} />;
   } else {
-    content = (
-      <>
-        {posts ? posts.map((post) => {
-          const {
-            id, title, body, comments, views, date,
-          } = post;
-          return (
-            <Post
-              key={id}
-              id={id}
-              title={title}
-              body={body}
-              comments={comments}
-              views={views}
-              date={date}
-            />
-          );
-        }) : null }
-      </>
-    );
+    content = posts ? posts.map((post) => <Post post={post} />) : null;
   }
 
   return (
