@@ -11,12 +11,6 @@ import posts from './store/reducers/posts';
 
 const store = createStore(posts, applyMiddleware(thunk));
 
-// console.log(date, newDate);
-
-// console.log('day', date.getDate(), 'month', date.getMonth() + 1, 'year', date.getFullYear(),
-// 'hours',
-// date.getHours(), 'minutes', date.getMinutes(), 'seconds', date.getSeconds());
-
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
