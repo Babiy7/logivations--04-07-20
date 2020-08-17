@@ -1,0 +1,18 @@
+.add-post__form {
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.add-post__title {
+    margin: 0 auto;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.add-post__input {
+}
+
+.add-post__footer {
+}

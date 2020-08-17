@@ -1,28 +1,13 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect, useRef } from 'react';
-
+import './AddPost.css';
 import { connect } from 'react-redux';
-
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
 import { addPostAsync } from '../../store/actions/posts';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& .MuiTextField-root': {
-      margin: theme.spacing(1),
-      width: '37.5ch',
-    },
-  },
-  container: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-}));
-
 function AddPost(props) {
-  const classes = useStyles();
+  const { addPost, handleClose } = props;
   const [state, setState] = useState({
     title: '',
     body: '',
@@ -44,37 +29,43 @@ function AddPost(props) {
 
   function handleClick() {
     if (state.title && state.body) {
-      props.addPost(state);
-      props.handleClose();
+      addPost(state);
+      handleClose();
     }
   }
 
   return (
-    <form className={classes.root} noValidate autoComplete="off">
+    <form className="add-post__form" noValidate autoComplete="off">
+      <p className="add-post__title">Add post</p>
       <div>
         <TextField
+          className="add-post__input"
           inputRef={inputEl}
           id="outlined-required"
           label="Title"
           name="title"
+          fullWidth
           variant="outlined"
           onChange={handleChange}
         />
-
+      </div>
+      <div>
         <TextField
+          className="add-post__input"
           id="outlined-multiline-static"
           label="Text"
           name="body"
+          fullWidth
           multiline
           rows={7}
           variant="outlined"
           onChange={handleChange}
         />
-        <div className={classes.container}>
-          <Button variant="contained" color="primary" onClick={handleClick}>
-            Add
-          </Button>
-        </div>
+      </div>
+      <div className="add-post__footer">
+        <Button variant="contained" color="primary" fullWidth onClick={handleClick}>
+          Add
+        </Button>
       </div>
     </form>
   );
