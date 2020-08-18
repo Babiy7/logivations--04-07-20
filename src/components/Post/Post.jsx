@@ -5,6 +5,8 @@
 import React from 'react';
 import './Post.css';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { HIDE_FILTER } from '../../store/actionTypes';
 
 function Post(props) {
   const {
@@ -14,6 +16,7 @@ function Post(props) {
 
   const handleClick = () => {
     history.push(`/post/${id}`);
+    props.hideFilter();
   };
 
   return (
@@ -47,4 +50,8 @@ function Post(props) {
   );
 }
 
-export default Post;
+const mapDispatchToProps = (dispatch) => ({
+  hideFilter: () => dispatch({ type: HIDE_FILTER }),
+});
+
+export default connect(null, mapDispatchToProps)(Post);

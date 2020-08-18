@@ -1,5 +1,5 @@
-import * as actions from '../actionTypes';
-import { updatedObject, sorted } from '../../shared/helper';
+import * as actions from '../../actionTypes';
+import { updatedObject, sorted } from '../../../shared/helper';
 
 const initState = {
   loading: false,

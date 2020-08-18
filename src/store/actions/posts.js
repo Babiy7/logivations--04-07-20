@@ -66,7 +66,7 @@ function getPostsAsync() {
 
 export function addPostAsync(post) {
   return (dispatch, getState) => {
-    const posts = [...getState().posts];
+    const posts = [...getState().postsState.posts];
     const sortedPosts = sorted(posts, 'Default filter');
     const id = sortedPosts[0].id + 1;
     const newPost = {
@@ -85,7 +85,7 @@ export function addPostAsync(post) {
 
 export function deletePost(id) {
   return (dispatch, getState) => {
-    const posts = [...getState().posts].filter((post) => post.id !== +id);
+    const posts = [...getState().postsState.posts].filter((post) => post.id !== +id);
     setItems(sorted(posts, 'Default filter'), 'posts');
     dispatch(updatePosts(posts));
   };
@@ -93,7 +93,7 @@ export function deletePost(id) {
 
 export function editPost(id, newPost) {
   return (dispatch, getState) => {
-    const posts = [...getState().posts].map((post) => {
+    const posts = [...getState().postsState.posts].map((post) => {
       if (post.id === +id) {
         return {
           ...newPost,
