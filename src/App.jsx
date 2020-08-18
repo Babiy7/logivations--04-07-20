@@ -41,7 +41,7 @@ function App(props) {
 }
 
 const mapStateToProps = (state) => {
-  const { open, message } = state.snackbarState;
+  const { open, message } = state.uiState;
   return {
     open,
     message,

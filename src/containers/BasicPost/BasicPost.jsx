@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import './BasicPost.css';
 import { useParams, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { OPEN_SNACKBAR } from '../../store/actionTypes';
+import { OPEN_SNACKBAR, SHOW_FILTER } from '../../store/actionTypes';
 import getPostAsync, { deletePost, editPost } from '../../store/actions/posts';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Alert from '../../components/UI/Alert/Alert';
@@ -31,7 +31,6 @@ function Content(props) {
     <>
       <div className="basic-post card">
         <div className="basic-post__header card-header">
-          <button type="button" className="basic-post__return" onClick={handleClick} />
           <div className="basic-post__title">{post.title ? post.title : null}</div>
           <div>
             <button type="button" className="basic-post__delete" onClick={handleDelete} />
@@ -68,12 +67,14 @@ function BasicPost(props) {
 
   function handleClick() {
     history.goBack();
+    props.showFilter();
   }
 
   function handleDelete() {
     history.push('/');
     props.deletePost(id);
     props.openSnackbar(`Deleted post id:${id}`);
+    props.showFilter();
   }
 
   function handleOpen() {
@@ -114,12 +115,12 @@ function BasicPost(props) {
 const mapStateToProps = (state) => {
   const {
     postsState,
-    snackbarState,
+    uiState,
   } = state;
 
   return {
     postsState,
-    snackbarState,
+    uiState,
   };
 };
 
@@ -128,6 +129,7 @@ const mapDispatchToProps = (dispatch) => ({
   deletePost: (id) => dispatch(deletePost(id)),
   editPost: (id, newPost) => dispatch(editPost(id, newPost)),
   openSnackbar: (message) => dispatch({ type: OPEN_SNACKBAR, payload: message }),
+  showFilter: () => dispatch({ type: SHOW_FILTER }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BasicPost);
