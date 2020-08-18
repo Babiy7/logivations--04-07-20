@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import './App.css';
 import {
@@ -5,11 +6,20 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { CLOSE_SNACKBAR } from './store/actionTypes';
 import Navigation from './components/UI/Navigation/Navigation';
 import Posts from './containers/Posts/Posts';
 import BasicPost from './containers/BasicPost/BasicPost';
+import Snackbar from './components/UI/Snackbar/Snackbar';
 
-function App() {
+function App(props) {
+  const { open, message, closeSnackbar } = props;
+
+  function handleClose() {
+    closeSnackbar();
+  }
+
   return (
     <Router>
       <div className="app">
@@ -24,9 +34,22 @@ function App() {
             </Route>
           </Switch>
         </div>
+        <Snackbar open={open} message={message} handleClose={handleClose} />
       </div>
     </Router>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  const { open, message } = state.snackbarState;
+  return {
+    open,
+    message,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  closeSnackbar: () => dispatch({ type: CLOSE_SNACKBAR }),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

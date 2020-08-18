@@ -43,7 +43,7 @@ function Navigation(props) {
 }
 
 const mapStateToProps = (state) => ({
-  filter: state.filter,
+  filter: state.postsState.filter,
 });
 
 const mapDispatchToProps = (dispatch) => ({
