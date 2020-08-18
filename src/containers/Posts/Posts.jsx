@@ -12,7 +12,7 @@ import AddPost from '../AddPost/AddPost';
 function Posts(props) {
   const [open, setOpen] = useState(false);
   const {
-    loading, posts, error,
+    postsState,
   } = props;
   let content = null;
 
@@ -24,14 +24,14 @@ function Posts(props) {
     setOpen(false);
   };
 
-  if (loading) {
+  if (postsState.loading) {
     content = <Spinner />;
   }
 
-  if (error) {
-    content = <Alert type="danger" message={error} />;
+  if (postsState.error) {
+    content = <Alert type="danger" message={postsState.error} />;
   } else {
-    content = posts ? posts.map((post) => <Post post={post} />) : null;
+    content = postsState.posts ? postsState.posts.map((post) => <Post post={post} />) : null;
   }
 
   return (

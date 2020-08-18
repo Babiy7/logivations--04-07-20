@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import './BasicPost.css';
 import { useParams, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { OPEN_SNACKBAR } from '../../store/actionTypes';
 import getPostAsync, { deletePost, editPost } from '../../store/actions/posts';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Alert from '../../components/UI/Alert/Alert';
@@ -49,16 +51,16 @@ function Content(props) {
 
 function BasicPost(props) {
   const {
-    loading, posts, error,
+    postsState, snackbarState,
   } = props;
   const { id } = useParams();
-  const post = posts.filter((p) => p.id === +id)[0];
+  const post = postsState.posts.filter((p) => p.id === +id)[0];
   const [state, setState] = useState({ post: {}, change: false });
   const history = useHistory();
   let content = null;
 
   useEffect(() => {
-    if (posts.length === 0) {
+    if (postsState.posts.length === 0) {
       props.getPost();
     }
     setState((s) => ({ ...s, post }));
@@ -71,6 +73,7 @@ function BasicPost(props) {
   function handleDelete() {
     history.push('/');
     props.deletePost(id);
+    props.openSnackbar(`Deleted post id:${id}`);
   }
 
   function handleOpen() {
@@ -80,17 +83,18 @@ function BasicPost(props) {
   function handleEdit(newPost) {
     setState((s) => ({ post: { ...s.post, ...newPost }, change: !s.change }));
     props.editPost(id, { ...state.post, ...newPost });
+    props.openSnackbar(`Changed post ${newPost.title}`);
   }
 
-  if (loading) {
+  if (postsState.loading) {
     content = <Spinner />;
   }
 
-  if (error) {
-    content = <Alert type="danger" message={error} />;
+  if (postsState.error) {
+    content = <Alert type="danger" message={postsState.error} />;
   }
 
-  if (posts.length > 0 && state.post) {
+  if (postsState.posts.length > 0 && state.post) {
     content = state.change
       ? <ChangeContent post={state.post} handleEdit={handleEdit} />
       : (
@@ -109,13 +113,13 @@ function BasicPost(props) {
 
 const mapStateToProps = (state) => {
   const {
-    loading, posts, error,
+    postsState,
+    snackbarState,
   } = state;
 
   return {
-    loading,
-    posts,
-    error,
+    postsState,
+    snackbarState,
   };
 };
 
@@ -123,6 +127,7 @@ const mapDispatchToProps = (dispatch) => ({
   getPost: () => dispatch(getPostAsync()),
   deletePost: (id) => dispatch(deletePost(id)),
   editPost: (id, newPost) => dispatch(editPost(id, newPost)),
+  openSnackbar: (message) => dispatch({ type: OPEN_SNACKBAR, payload: message }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BasicPost);
