@@ -14,4 +14,17 @@
 
 .form__input {}
 
-.form__footer {}
+.form__footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.footer-container__buttons {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.footer-container__button {
+    margin-left: 16px;
+}

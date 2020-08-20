@@ -5,52 +5,109 @@ import React, { useState, useEffect } from 'react';
 import './BasicPost.css';
 import { useParams, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { OPEN_SNACKBAR, SHOW_FILTER } from '../../store/actionTypes';
-import getPostAsync, { deletePost, editPost } from '../../store/actions/posts';
-import Spinner from '../../components/UI/Spinner/Spinner';
-import Alert from '../../components/UI/Alert/Alert';
-import Collapse from '../../components/Collapse/Collapse';
-import Fab from '../../components/UI/FabButton/FabButton';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Divider from '@material-ui/core/Divider';
 import Form from '../../components/UI/Form/Form';
+import Alert from '../../components/UI/Alert/Alert';
+import Spinner from '../../components/UI/Spinner/Spinner';
+import getPostAsync, { deletePost, editPost } from '../../store/actions/posts';
+import { OPEN_SNACKBAR, SHOW_FILTER } from '../../store/actionTypes';
 
 function ChangeContent(props) {
-  const { handleEdit, post } = props;
+  const { handleEdit, post, handleChangeComponent } = props;
 
   return (
-    <div className="change-content">
-      <Form title="Edit post" btnTitle="edit" handleClick={handleEdit} post={post} />
-    </div>
+    <Card>
+      <div className="change-content">
+        <Form
+          title="Edit post"
+          btnTitle="edit"
+          handleClick={handleEdit}
+          post={post}
+          handleClose={handleChangeComponent}
+        />
+      </div>
+    </Card>
   );
 }
 
 function Content(props) {
   const {
-    post, handleClick, handleDelete, handleOpen, comments,
+    post, handleDelete, handleChangeComponent, comments,
   } = props;
+  const [expanded, setExpanded] = useState(false);
+
+  function handleExpandClick() {
+    setExpanded(!expanded);
+  }
+
   return (
-    <>
-      <div className="basic-post card">
-        <div className="basic-post__header card-header">
-          <div className="basic-post__title">{post.title ? post.title : null}</div>
-          <div>
-            <button type="button" className="basic-post__delete" onClick={handleDelete} />
-          </div>
+    <Card className="basic-post">
+      <CardHeader
+        action={(
+          <IconButton aria-label="settings" onClick={handleDelete}>
+            <DeleteIcon />
+          </IconButton>
+        )}
+        title={post.title}
+        subheader={post.date}
+      />
+
+      <CardContent className="basic-post__content">
+        <Typography variant="body2" color="textSecondary" component="p">
+          {post.body}
+        </Typography>
+      </CardContent>
+
+      <CardActions className="basic-post__footer" disableSpacing>
+        <div className="basic-post__information">
+          <IconButton aria-label="edit" onClick={handleChangeComponent}>
+            <EditIcon />
+          </IconButton>
         </div>
-        <div className="card-body">
-          <p className="card-text">{post.body ? post.body : null}</p>
-        </div>
-        <Collapse comments={comments} id={post.id} />
-      </div>
-      <div className="basic-post__footer">
-        <Fab type="edit" handleOpen={handleOpen} />
-      </div>
-    </>
+
+        <IconButton
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label="show more"
+        >
+          <ExpandMoreIcon />
+        </IconButton>
+
+      </CardActions>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <CardContent>
+          <List className="basic-post__list">
+            {comments.map((comment) => (
+              <>
+                <ListItem key={comment.id}>
+                  <ListItemText primary={comment.name} secondary={comment.email} />
+                </ListItem>
+                <Divider />
+              </>
+            ))}
+          </List>
+        </CardContent>
+      </Collapse>
+    </Card>
   );
 }
 
 function BasicPost(props) {
   const {
-    postsState, snackbarState,
+    postsState,
   } = props;
   const { id } = useParams();
   const post = postsState.posts.filter((p) => p.id === +id)[0];
@@ -65,11 +122,6 @@ function BasicPost(props) {
     setState((s) => ({ ...s, post }));
   }, [props]);
 
-  function handleClick() {
-    history.goBack();
-    props.showFilter();
-  }
-
   function handleDelete() {
     history.push('/');
     props.deletePost(id);
@@ -77,7 +129,7 @@ function BasicPost(props) {
     props.showFilter();
   }
 
-  function handleOpen() {
+  function handleChangeComponent() {
     setState((s) => ({ ...s, change: !s.change }));
   }
 
@@ -97,14 +149,19 @@ function BasicPost(props) {
 
   if (postsState.posts.length > 0 && state.post) {
     content = state.change
-      ? <ChangeContent post={state.post} handleEdit={handleEdit} />
+      ? (
+        <ChangeContent
+          post={state.post}
+          handleEdit={handleEdit}
+          handleChangeComponent={handleChangeComponent}
+        />
+      )
       : (
         <Content
           post={state.post}
           comments={post.comments}
-          handleClick={handleClick}
           handleDelete={handleDelete}
-          handleOpen={handleOpen}
+          handleChangeComponent={handleChangeComponent}
         />
       );
   }
