@@ -6,15 +6,13 @@ import './Form.css';
 
 function Form(props) {
   const {
-    handleClick, title, btnTitle, post,
+    handleClick, title, btnTitle, post, handleClose,
   } = props;
   const [state, setState] = useState({
     title: '',
     body: '',
   });
   const inputEl = useRef(null);
-
-  console.log('rendering');
 
   useEffect(() => {
     if (post) {
@@ -65,9 +63,14 @@ function Form(props) {
         />
       </div>
       <div className="form__footer">
-        <Button variant="contained" color="primary" fullWidth onClick={() => handleClick(state)}>
-          {btnTitle}
-        </Button>
+        <div className="footer-container__buttons">
+          <Button variant="contained" color="primary" onClick={() => handleClick(state)}>
+            {btnTitle}
+          </Button>
+          <div className="footer-container__button">
+            <Button variant="contained" color="secondary" className="form__button" onClick={handleClose}>Cancel</Button>
+          </div>
+        </div>
       </div>
     </form>
   );

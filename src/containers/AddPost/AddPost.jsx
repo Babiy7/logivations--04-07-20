@@ -16,7 +16,7 @@ function AddPost(props) {
     }
   }
 
-  return <Form handleClick={handleClick} title="Add post" btnTitle="add" />;
+  return <Form handleClick={handleClick} handleClose={handleClose} title="Add post" btnTitle="add" />;
 }
 
 const mapDispatchToProps = (dispatch) => ({
